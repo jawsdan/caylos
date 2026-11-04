@@ -50,7 +50,7 @@
     el.innerHTML = `
       <nav class="container nav" aria-label="Main">
         <a href="index.html" class="logo">
-          <img src="assets/img/logo.png" alt="Caylò's Original Fried Chicken" width="757" height="980">
+          <img src="assets/img/logo.png" alt="Caylò's Original Fried Chicken">
         </a>
         <ul class="nav-links" id="nav-links">
           <li><a href="index.html"${a("home")} data-i18n="nav.home"></a></li>
@@ -121,7 +121,7 @@
         <div class="footer-grid">
           <div>
             <a href="index.html" class="footer-logo">
-              <img src="assets/img/logo.png" alt="Caylò's Original Fried Chicken" width="757" height="980">
+              <img src="assets/img/logo.png" alt="Caylò's Original Fried Chicken">
             </a>
             <p data-i18n="footer.about"></p>
             <div class="socials">${socials}</div>

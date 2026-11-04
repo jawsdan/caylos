@@ -34,3 +34,6 @@ The contact, job and franchise forms open the visitor's email app with the messa
 The site is live at **https://jawsdan.github.io/caylos/**.
 
 GitHub Pages is set to *Deploy from a branch* (Settings → Pages). Every push to the chosen branch republishes the site within a minute or two. After merging into `main`, switch the branch there to `main` / `(root)`.
+
+## After changing a file
+Each page loads the CSS and JS files with a version tag, like `style.css?v=3`. When you change `style.css`, `data.js`, `i18n.js` or `main.js`, raise that number in all the `.html` files (for example to `?v=4`). Visitors' browsers then fetch the new files straight away instead of showing an old copy.

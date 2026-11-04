@@ -33,7 +33,7 @@ body {
   background: var(--cream);
   -webkit-font-smoothing: antialiased;
 }
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 a { color: var(--red); }
 h1, h2, h3, h4 {
   font-family: var(--head);
