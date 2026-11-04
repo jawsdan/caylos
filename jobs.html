@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caylos' Fried Chicken</title>
+  <meta name="description" content="Caylos' Fried Chicken – sprø, saftig kylling stekt fersk hver dag.">
+  <meta name="theme-color" content="#b3261e">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-page="jobs" data-title="jobs.title">
+  <header id="site-header" class="site-header"></header>
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow" data-i18n="jobs.eyebrow"></span>
+        <h1 data-i18n="jobs.title"></h1>
+        <p data-i18n="jobs.text"></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 data-i18n="jobs.why.title"></h2>
+        <div class="grid grid-3" style="margin-top:24px">
+          <div class="card"><div class="feature-icon">🕒</div><h3 data-i18n="jobs.why.1.title"></h3><p class="muted" data-i18n="jobs.why.1.text"></p></div>
+          <div class="card"><div class="feature-icon">🍗</div><h3 data-i18n="jobs.why.2.title"></h3><p class="muted" data-i18n="jobs.why.2.text"></p></div>
+          <div class="card"><div class="feature-icon">📈</div><h3 data-i18n="jobs.why.3.title"></h3><p class="muted" data-i18n="jobs.why.3.text"></p></div>
+        </div>
+      </div>
+    </section>
+    <section class="section" style="background:var(--paper)">
+      <div class="container">
+        <h2 data-i18n="jobs.open.title"></h2>
+        <div class="grid" id="job-list" style="margin-top:24px"></div>
+      </div>
+    </section>
+    <section class="section" id="apply">
+      <div class="container" style="max-width:760px">
+        <h2 data-i18n="jobs.form.title"></h2>
+        <p class="muted" data-i18n="jobs.form.text"></p>
+        <div class="card">
+          <form class="form" data-mailto="jobsEmail" novalidate>
+            <div class="form-row">
+              <div><label for="job-name" data-i18n="form.name"></label><input class="input" id="job-name" name="name" required autocomplete="name"></div>
+              <div><label for="job-email" data-i18n="form.email"></label><input class="input" id="job-email" name="email" type="email" required autocomplete="email"></div>
+            </div>
+            <div class="form-row">
+              <div><label for="job-phone" data-i18n="form.phone"></label><input class="input" id="job-phone" name="phone" type="tel" autocomplete="tel"></div>
+              <div><label for="job-position" data-i18n="jobs.form.position"></label><select class="select input" id="job-position" name="position"></select></div>
+            </div>
+            <div><label for="job-restaurant" data-i18n="jobs.form.restaurant"></label><select class="select input" id="job-restaurant" name="restaurant"></select></div>
+            <div><label for="job-about" data-i18n="jobs.form.about"></label><textarea class="input" id="job-about" name="about" required></textarea></div>
+            <div><button class="btn btn-primary" type="submit" data-i18n="form.send"></button></div>
+            <p class="form-note" data-i18n="form.note"></p>
+            <div class="form-success" role="status" data-i18n="form.success"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="site-footer" class="site-footer"></footer>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
