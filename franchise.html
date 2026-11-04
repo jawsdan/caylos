@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Caylo's Fried Chicken</title>
+  <meta name="description" content="Caylo's Fried Chicken – sprø, saftig kylling stekt fersk hver dag.">
+  <meta name="theme-color" content="#b8202b">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=13">
+</head>
+<body data-page="franchise" data-title="franchise.title">
+  <header id="site-header" class="site-header"></header>
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow" data-i18n="franchise.eyebrow"></span>
+        <h1 data-i18n="franchise.title"></h1>
+        <p data-i18n="franchise.text"></p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 data-i18n="franchise.offer.title"></h2>
+        <div class="grid grid-3" style="margin-top:24px">
+          <div class="card"><div class="feature-icon">🏆</div><h3 data-i18n="franchise.offer.1.title"></h3><p class="muted" data-i18n="franchise.offer.1.text"></p></div>
+          <div class="card"><div class="feature-icon">🎓</div><h3 data-i18n="franchise.offer.2.title"></h3><p class="muted" data-i18n="franchise.offer.2.text"></p></div>
+          <div class="card"><div class="feature-icon">🤝</div><h3 data-i18n="franchise.offer.3.title"></h3><p class="muted" data-i18n="franchise.offer.3.text"></p></div>
+        </div>
+      </div>
+    </section>
+    <section class="section" style="background:var(--paper)">
+      <div class="container">
+        <h2 data-i18n="franchise.steps.title"></h2>
+        <div class="steps" style="margin-top:24px">
+          <div class="step"><h3 data-i18n="franchise.step.1.title"></h3><p class="muted" data-i18n="franchise.step.1.text"></p></div>
+          <div class="step"><h3 data-i18n="franchise.step.2.title"></h3><p class="muted" data-i18n="franchise.step.2.text"></p></div>
+          <div class="step"><h3 data-i18n="franchise.step.3.title"></h3><p class="muted" data-i18n="franchise.step.3.text"></p></div>
+          <div class="step"><h3 data-i18n="franchise.step.4.title"></h3><p class="muted" data-i18n="franchise.step.4.text"></p></div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container" style="max-width:760px">
+        <h2 data-i18n="franchise.form.title"></h2>
+        <p class="muted" data-i18n="franchise.form.text"></p>
+        <div class="card">
+          <form class="form" data-mailto="franchiseEmail" novalidate>
+            <div class="form-row">
+              <div><label for="fr-name" data-i18n="form.name"></label><input class="input" id="fr-name" name="name" required autocomplete="name"></div>
+              <div><label for="fr-email" data-i18n="form.email"></label><input class="input" id="fr-email" name="email" type="email" required autocomplete="email"></div>
+            </div>
+            <div class="form-row">
+              <div><label for="fr-phone" data-i18n="form.phone"></label><input class="input" id="fr-phone" name="phone" type="tel" autocomplete="tel"></div>
+              <div><label for="fr-city" data-i18n="franchise.form.city"></label><input class="input" id="fr-city" name="city" required></div>
+            </div>
+            <div>
+              <label for="fr-capital" data-i18n="franchise.form.capital"></label>
+              <select class="select input" id="fr-capital" name="capital">
+                <option value="" data-i18n="franchise.form.choose"></option>
+                <option>&lt; 1 000 000 kr</option>
+                <option>1 000 000 – 3 000 000 kr</option>
+                <option>3 000 000 – 5 000 000 kr</option>
+                <option>&gt; 5 000 000 kr</option>
+              </select>
+            </div>
+            <div><label for="fr-exp" data-i18n="franchise.form.experience"></label><textarea class="input" id="fr-exp" name="experience" required></textarea></div>
+            <div><button class="btn btn-primary" type="submit" data-i18n="form.send"></button></div>
+            <p class="form-note" data-i18n="form.note"></p>
+            <div class="form-success" role="status" data-i18n="form.success"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="site-footer" class="site-footer"></footer>
+  <script src="assets/js/data.js?v=13"></script>
+  <script src="assets/js/i18n.js?v=13"></script>
+  <script src="assets/js/main.js?v=13"></script>
+</body>
+</html>
