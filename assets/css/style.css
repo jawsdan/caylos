@@ -286,9 +286,17 @@ p { margin: 0 0 1em; }
   .hero-disc { width: min(62%, 240px); order: -1; border-width: 7px; box-shadow: 0 0 0 7px var(--orange), 0 20px 40px rgba(0, 0, 0, 0.25); }
 }
 
-.page-hero { padding: 64px 0 92px; }
-.page-hero .eyebrow { color: var(--orange-light); }
-.page-hero p { max-width: 640px; opacity: 0.9; font-size: 1.1rem; margin: 0; }
+/* Compact red heading on inner pages */
+.page-hero { padding: 26px 0 46px; }
+.page-hero::after { height: 18px; background-size: 32px 46px; }
+.page-hero .eyebrow { color: var(--orange-light); margin-bottom: 2px; font-size: 0.72rem; }
+.page-hero h1 { font-size: clamp(2rem, 4.5vw, 3rem); margin: 0 0 4px; }
+.page-hero p { max-width: 640px; opacity: 0.9; font-size: 1rem; margin: 0; }
+@media (max-width: 600px) {
+  .page-hero { padding: 20px 0 38px; }
+  .page-hero p { font-size: 0.92rem; }
+}
+.section.menu-section { padding-top: 32px; }
 
 /* ---------- Cards & grids ---------- */
 .grid { display: grid; gap: 22px; }
