@@ -26,3 +26,8 @@ The example restaurants, prices, addresses and contact details are placeholders 
 
 ## Forms
 The contact, job and franchise forms open the visitor's email app with the message filled in, sent to the addresses in `COMPANY` in `data.js`. No server needed.
+
+## Hosting (GitHub Pages)
+The site is published automatically to **https://jawsdan.github.io/caylos/** every time `main` is updated (see `.github/workflows/pages.yml`).
+
+One-time setup: on GitHub go to **Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
