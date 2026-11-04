@@ -185,6 +185,70 @@
   }
 
   /* ---------- Menu items ---------- */
+  /* ---------- Allergens ---------- */
+  const ALLERGY_KEY = "caylos-allergens";
+  const allergenName = (id) => {
+    const a = (typeof ALLERGENS !== "undefined" ? ALLERGENS : []).find((x) => x.id === id);
+    return a ? L(a) : id;
+  };
+  let blocked = new Set();
+  try {
+    blocked = new Set(JSON.parse(localStorage.getItem(ALLERGY_KEY) || "[]"));
+  } catch (e) { /* storage blocked */ }
+  const saveBlocked = () => {
+    try { localStorage.setItem(ALLERGY_KEY, JSON.stringify([...blocked])); } catch (e) { /* ignore */ }
+  };
+  const isHidden = (item) => (item.allergens || []).some((a) => blocked.has(a));
+
+  function allergenLine(item) {
+    if (!item.allergens) return "";
+    const list = item.allergens.length ? item.allergens.map(allergenName).join(", ") : t("allergy.none");
+    return `<p class="item-allergens"><strong>${t("allergy.contains")}</strong> ${esc(list)}</p>`;
+  }
+
+  function renderAllergyPanel() {
+    const box = document.getElementById("allergy-panel");
+    if (!box || typeof ALLERGENS === "undefined") return;
+    const wasOpen = box.querySelector("details") ? box.querySelector("details").open : window.innerWidth > 900;
+    box.innerHTML = `
+      <details${wasOpen ? " open" : ""}>
+        <summary>
+          <span class="allergy-title">${t("allergy.title")}</span>
+          <span class="allergy-count" id="allergy-count"></span>
+        </summary>
+        <p class="allergy-hint">${t("allergy.hint")}</p>
+        <div class="allergy-list">
+          ${ALLERGENS.map(
+            (a) => `<label class="allergy-chip"><input type="checkbox" value="${esc(a.id)}"${blocked.has(a.id) ? " checked" : ""}><span>${esc(L(a))}</span></label>`
+          ).join("")}
+        </div>
+        <button type="button" class="allergy-reset" id="allergy-reset">${t("allergy.reset")}</button>
+        <p class="allergy-note">${t("allergy.note")}</p>
+      </details>`;
+    box.querySelectorAll("input[type=checkbox]").forEach((cb) =>
+      cb.addEventListener("change", () => {
+        if (cb.checked) blocked.add(cb.value);
+        else blocked.delete(cb.value);
+        saveBlocked();
+        renderMenu();
+      })
+    );
+    box.querySelector("#allergy-reset").addEventListener("click", () => {
+      blocked.clear();
+      saveBlocked();
+      box.querySelectorAll("input[type=checkbox]").forEach((cb) => (cb.checked = false));
+      renderMenu();
+    });
+  }
+
+  function updateAllergyCount(hiddenCount) {
+    const el = document.getElementById("allergy-count");
+    const reset = document.getElementById("allergy-reset");
+    if (reset) reset.hidden = blocked.size === 0;
+    if (!el) return;
+    el.textContent = blocked.size ? t("allergy.hidden").replace("{n}", hiddenCount) : "";
+  }
+
   function itemCard(item) {
     const tags = (item.tags || [])
       .map((tg) => `<span class="tag tag-${tg}">${esc(t("menu.tag." + tg))}</span>`)
@@ -198,6 +262,7 @@
         <div class="item-body">
           <h3>${esc(L(item.name))}</h3>
           <p>${esc(L(item.desc))}</p>
+          ${allergenLine(item)}
           <div class="item-foot">
             <span class="price">${item.price} ${t("currency")}</span>
             <span class="tags">${tags}</span>
@@ -216,11 +281,15 @@
     const nav = document.getElementById("cat-nav");
     const list = document.getElementById("menu-list");
     if (!nav || !list) return;
-    nav.innerHTML = MENU.map(
+    // Leave out dishes with ticked allergens, and categories that end up empty
+    const cats = MENU.map((c) => ({ ...c, items: c.items.filter((i) => !isHidden(i)) })).filter((c) => c.items.length);
+    const hiddenCount = MENU.reduce((n, c) => n + c.items.filter(isHidden).length, 0);
+    updateAllergyCount(hiddenCount);
+    nav.innerHTML = cats.map(
       (c) =>
         `<a class="side-link" href="#${esc(c.id)}" data-cat="${esc(c.id)}"><span class="side-thumb" aria-hidden="true">${catThumb(c)}</span><span>${esc(L(c.name))}</span></a>`
     ).join("");
-    list.innerHTML = MENU.map(
+    list.innerHTML = (cats.length ? "" : `<div class="card empty">${t("allergy.empty")}</div>`) + cats.map(
       (c) => `
       <section class="menu-cat" id="${esc(c.id)}">
         <div class="menu-cat-head">
@@ -241,13 +310,13 @@
       if (nav.scrollWidth > nav.clientWidth) {
         nav.scrollTo({ left: active.offsetLeft - 16, behavior: "smooth" });
       }
-      const side = nav.closest(".menu-side");
+      const side = nav.closest(".menu-aside");
       if (side && side.scrollHeight > side.clientHeight) {
         const top = active.offsetTop - side.clientHeight / 2 + active.offsetHeight / 2;
         side.scrollTo({ top, behavior: "smooth" });
       }
     };
-    highlight(MENU[0] && MENU[0].id);
+    highlight(cats[0] && cats[0].id);
     if (menuObserver) menuObserver.disconnect();
     if ("IntersectionObserver" in window) {
       menuObserver = new IntersectionObserver(
@@ -489,6 +558,7 @@
   /* ---------- Render everything ---------- */
   function renderDynamic() {
     renderTicker();
+    renderAllergyPanel();
     renderFeatured();
     renderMenu();
     renderRestaurants();

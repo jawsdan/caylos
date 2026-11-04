@@ -77,6 +77,14 @@ const I18N = {
     "menu.tag.spicy": "Sterk",
     "menu.tag.new": "Nyhet",
     "menu.tag.veg": "Vegetar",
+    "allergy.title": "Allergier",
+    "allergy.hint": "Kryss av det du ikke tåler, så skjuler vi retter som inneholder det.",
+    "allergy.reset": "Nullstill",
+    "allergy.hidden": "{n} skjult",
+    "allergy.contains": "Inneholder:",
+    "allergy.none": "ingen av de 14 allergenene",
+    "allergy.empty": "Ingen retter passer med allergiene du har valgt. Trykk «Nullstill» for å vise alt igjen.",
+    "allergy.note": "Eksempeldata – spør alltid personalet hvis du er usikker.",
     "currency": "kr",
 
     /* About */
@@ -260,6 +268,14 @@ const I18N = {
     "menu.tag.spicy": "Spicy",
     "menu.tag.new": "New",
     "menu.tag.veg": "Vegetarian",
+    "allergy.title": "Allergies",
+    "allergy.hint": "Tick what you can't have and we'll hide dishes that contain it.",
+    "allergy.reset": "Clear",
+    "allergy.hidden": "{n} hidden",
+    "allergy.contains": "Contains:",
+    "allergy.none": "none of the 14 allergens",
+    "allergy.empty": "No dishes match the allergies you selected. Press “Clear” to show everything again.",
+    "allergy.note": "Example data – always ask our staff if you're unsure.",
     "currency": "kr",
 
     /* About */
