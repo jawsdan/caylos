@@ -1,4 +1,4 @@
-/* Caylò's Original Fried Chicken — main stylesheet */
+/* Caylo's Original Fried Chicken — main stylesheet */
 
 :root {
   --red: #b8202b;
@@ -17,7 +17,7 @@
   --header-h: 84px;
   --head: "Kanit", "Arial Black", system-ui, sans-serif;
   --body: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  /* Orange zigzag stripes from the Caylò's box */
+  /* Orange zigzag stripes from the Caylo's box */
   --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='140'%3E%3Cpolygon points='0,0 44,0 88,70 44,140 0,140 44,70' fill='%23E8742A'/%3E%3C/svg%3E");
 }
 @media (max-width: 900px) { :root { --header-h: 68px; } }

@@ -1,4 +1,4 @@
-# Caylò's Fried Chicken – website
+# Caylo's Fried Chicken – website
 
 A simple website with no build step. Open `index.html` in a browser, or upload the whole folder to any web host (GitHub Pages, Netlify, one.com, etc.).
 

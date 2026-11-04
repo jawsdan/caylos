@@ -1,5 +1,5 @@
 /* =====================================================================
-   Caylò's Fried Chicken — site script
+   Caylo's Fried Chicken — site script
    Builds the header and footer, switches language, and renders the
    restaurants, menu and jobs from data.js.
    You normally don't need to edit this file.
@@ -50,7 +50,7 @@
     el.innerHTML = `
       <nav class="container container-full nav" aria-label="Main">
         <a href="index.html" class="logo">
-          <img src="assets/img/logo.png" alt="Caylò's Original Fried Chicken">
+          <img src="assets/img/logo.png" alt="Caylo's Original Fried Chicken">
         </a>
         <ul class="nav-links" id="nav-links">
           <li><a href="index.html"${a("home")} data-i18n="nav.home"></a></li>
@@ -121,7 +121,7 @@
         <div class="footer-grid">
           <div>
             <a href="index.html" class="footer-logo">
-              <img src="assets/img/logo.png" alt="Caylò's Original Fried Chicken">
+              <img src="assets/img/logo.png" alt="Caylo's Original Fried Chicken">
             </a>
             <p data-i18n="footer.about"></p>
             <div class="socials">${socials}</div>
@@ -153,7 +153,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <span>© ${new Date().getFullYear()} Caylò's Fried Chicken. <span data-i18n="footer.rights"></span></span>
+          <span>© ${new Date().getFullYear()} Caylo's Fried Chicken. <span data-i18n="footer.rights"></span></span>
           ${COMPANY.orgNumber ? `<span><span data-i18n="contact.org"></span> ${esc(COMPANY.orgNumber)}</span>` : ""}
         </div>
       </div>`;
@@ -180,7 +180,7 @@
     });
     const titleKey = document.body.dataset.title;
     if (titleKey) {
-      document.title = page === "home" ? t(titleKey) : `${t(titleKey)} | Caylò's Fried Chicken`;
+      document.title = page === "home" ? t(titleKey) : `${t(titleKey)} | Caylo's Fried Chicken`;
     }
   }
 
@@ -582,7 +582,7 @@
           const val = f.tagName === "SELECT" ? f.options[f.selectedIndex]?.text || "" : f.value;
           if (val) lines.push(`${label ? label.textContent : f.name}: ${val}`);
         });
-        const heading = form.closest("section")?.querySelector("h2")?.textContent || "Caylò's";
+        const heading = form.closest("section")?.querySelector("h2")?.textContent || "Caylo's";
         const nameField = form.querySelector('[name="name"]');
         const subject = `${heading}${nameField && nameField.value ? " – " + nameField.value : ""}`;
         window.location.href =

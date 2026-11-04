@@ -1,5 +1,5 @@
 /* =====================================================================
-   CAYLÒ'S ORIGINAL FRIED CHICKEN — SITE CONTENT
+   CAYLO'S ORIGINAL FRIED CHICKEN — SITE CONTENT
    ---------------------------------------------------------------------
    This is the ONLY file you need to edit to change:
      • company contact details
@@ -39,7 +39,7 @@ const COMPANY = {
    ---------------------------------------------------------------- */
 const RESTAURANTS = [
   {
-    name: "Caylò's Drammen",
+    name: "Caylo's Drammen",
     city: "Drammen",
     address: "Griffenfeldsgate 3, 3045 Drammen",
     phone: "+47 411 96 000",
@@ -536,7 +536,7 @@ const MENU = [
   },
 ];
 
-/* ---------- Open jobs (Work at Caylò's page) ----------
+/* ---------- Open jobs (Work at Caylo's page) ----------
    Leave the list empty [] if you have no open positions. */
 const JOBS = [
   {
