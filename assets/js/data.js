@@ -97,7 +97,9 @@ const RESTAURANTS = [
 ];
 
 /* ---------- Menu ----------
-   Each category has an icon (shown in the sidebar) and a list of items.
+   Each category has a list of items. The sidebar picture is the first
+   dish with a photo; add image: "..." to a category to choose another,
+   or it falls back to the category icon (emoji).
    price: number in NOK (kr)
    tags:  any of "spicy", "new", "veg"
    emoji: shown as a picture until you add a real photo

@@ -207,13 +207,18 @@
   }
 
   let menuObserver = null;
+  // Category picture: its own "image", else the first dish with a photo, else its emoji
+  function catThumb(c) {
+    const img = c.image || (c.items.find((i) => i.image) || {}).image;
+    return img ? `<img src="${esc(img)}" alt="" loading="lazy" decoding="async">` : c.icon || "🍗";
+  }
   function renderMenu() {
     const nav = document.getElementById("cat-nav");
     const list = document.getElementById("menu-list");
     if (!nav || !list) return;
     nav.innerHTML = MENU.map(
       (c) =>
-        `<a class="side-link" href="#${esc(c.id)}" data-cat="${esc(c.id)}"><i aria-hidden="true">${c.icon || "🍗"}</i><span>${esc(L(c.name))}</span></a>`
+        `<a class="side-link" href="#${esc(c.id)}" data-cat="${esc(c.id)}"><span class="side-thumb" aria-hidden="true">${catThumb(c)}</span><span>${esc(L(c.name))}</span></a>`
     ).join("");
     list.innerHTML = MENU.map(
       (c) => `
@@ -232,8 +237,14 @@
       links.forEach((c) => c.classList.toggle("active", c.dataset.cat === id));
       const active = nav.querySelector(".side-link.active");
       // On phones the categories are a sideways row: keep the active one in view
-      if (active && nav.scrollWidth > nav.clientWidth) {
+      if (!active) return;
+      if (nav.scrollWidth > nav.clientWidth) {
         nav.scrollTo({ left: active.offsetLeft - 16, behavior: "smooth" });
+      }
+      const side = nav.closest(".menu-side");
+      if (side && side.scrollHeight > side.clientHeight) {
+        const top = active.offsetTop - side.clientHeight / 2 + active.offsetHeight / 2;
+        side.scrollTo({ top, behavior: "smooth" });
       }
     };
     highlight(MENU[0] && MENU[0].id);
