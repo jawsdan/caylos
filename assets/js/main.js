@@ -154,7 +154,7 @@
         </div>
         <div class="footer-bottom">
           <span>© ${new Date().getFullYear()} Caylò's Fried Chicken. <span data-i18n="footer.rights"></span></span>
-          <span><span data-i18n="contact.org"></span> ${esc(COMPANY.orgNumber)}</span>
+          ${COMPANY.orgNumber ? `<span><span data-i18n="contact.org"></span> ${esc(COMPANY.orgNumber)}</span>` : ""}
         </div>
       </div>`;
   }
@@ -198,13 +198,37 @@
   const saveBlocked = () => {
     try { localStorage.setItem(ALLERGY_KEY, JSON.stringify([...blocked])); } catch (e) { /* ignore */ }
   };
-  const isHidden = (item) => (item.allergens || []).some((a) => blocked.has(a));
+  // Dishes list allergen codes like ["H", "E", "M"]; ALLERGEN_CODES says what each code means.
+  const CODES = typeof ALLERGEN_CODES !== "undefined" ? ALLERGEN_CODES : {};
+  const codeId = (code) => (code in CODES ? CODES[code] : code); // also accepts plain ids like "gluten"
+  // Hide a dish if it contains a ticked allergen. If we don't know everything it
+  // contains (no allergen info, or an unknown code), hide it as soon as anything is ticked.
+  const isHidden = (item) => {
+    if (!blocked.size) return false;
+    if (!item.allergens) return true;
+    return item.allergens.some((c) => {
+      const id = codeId(c);
+      return id === null || id === undefined || blocked.has(id);
+    });
+  };
 
   function allergenLine(item) {
-    if (!item.allergens) return "";
-    const list = item.allergens.length ? item.allergens.map(allergenName).join(", ") : t("allergy.none");
-    return `<p class="item-allergens"><strong>${t("allergy.contains")}</strong> ${esc(list)}</p>`;
+    if (!item.allergens) {
+      return `<p class="item-allergens"><strong>${t("allergy.label")}</strong> ${t("allergy.unknown")}</p>`;
+    }
+    if (!item.allergens.length) {
+      return `<p class="item-allergens"><strong>${t("allergy.label")}</strong> ${t("allergy.none")}</p>`;
+    }
+    const codes = item.allergens.map(esc).join(", ");
+    const names = item.allergens
+      .map(codeId)
+      .map((id) => (id ? allergenName(id) : t("allergy.unknownCode")))
+      .join(", ");
+    return `<p class="item-allergens"><strong>${t("allergy.label")}</strong> (${codes}) – ${esc(names)}</p>`;
   }
+
+  const priceText = (item) =>
+    `${item.priceFrom ? t("menu.from") + " " : ""}${item.price} ${t("currency")}`;
 
   function renderAllergyPanel() {
     const box = document.getElementById("allergy-panel");
@@ -264,7 +288,7 @@
           <p>${esc(L(item.desc))}</p>
           ${allergenLine(item)}
           <div class="item-foot">
-            <span class="price">${item.price} ${t("currency")}</span>
+            <span class="price">${priceText(item)}</span>
             <span class="tags">${tags}</span>
           </div>
         </div>
@@ -378,8 +402,10 @@
   function restoCard(r) {
     const days = t("days");
     const today = osloNow().day;
-    let status;
+    const hasHours = r.hours && r.hours.length;
+    let status = "";
     if (r.comingSoon) status = `<span class="status status-soon">${t("restos.soon")}</span>`;
+    else if (!hasHours) status = ""; // no opening hours entered: don't guess open/closed
     else if (isOpen(r)) status = `<span class="status status-open">${t("restos.open")}</span>`;
     else status = `<span class="status status-closed">${t("restos.closed")}</span>`;
 
@@ -417,7 +443,8 @@
         ${features}
         ${hours}
         <div class="resto-actions">
-          <a class="btn btn-primary" href="${maps}" target="_blank" rel="noopener">${t("restos.directions")}</a>
+          ${r.orderUrl ? `<a class="btn btn-primary" href="${esc(r.orderUrl)}" target="_blank" rel="noopener">${t("restos.order")}</a>` : ""}
+          <a class="btn ${r.orderUrl ? "btn-outline" : "btn-primary"}" href="${maps}" target="_blank" rel="noopener">${t("restos.directions")}</a>
           ${r.phone ? `<a class="btn btn-outline" href="tel:${esc(r.phone.replace(/\s/g, ""))}">${t("restos.call")}</a>` : ""}
         </div>
       </article>`;
@@ -430,6 +457,9 @@
     if (!list) return;
     const search = document.getElementById("resto-search");
     const select = document.getElementById("resto-city");
+    // Search and city filter only make sense with a few restaurants
+    const toolbar = search.closest(".toolbar");
+    if (toolbar) toolbar.hidden = RESTAURANTS.length < 3;
 
     const current = select.value;
     select.innerHTML =
@@ -465,6 +495,20 @@
     };
     set("stat-restos", RESTAURANTS.length);
     set("stat-cities", cities().length);
+    // "1 restaurant" vs "2 restaurants"
+    const plural = (key, n) =>
+      document.querySelectorAll(`[data-i18n="${key}"]`).forEach((el) => {
+        el.textContent = t(n === 1 ? key + ".one" : key);
+      });
+    plural("home.restos.count", RESTAURANTS.length);
+    plural("home.restos.cities", cities().length);
+    plural("about.stat.restos", RESTAURANTS.length);
+    plural("about.stat.cities", cities().length);
+    // "Order now" buttons that use the main ordering link
+    document.querySelectorAll("[data-order-link]").forEach((a) => {
+      if (COMPANY.orderUrl) a.href = COMPANY.orderUrl;
+      else a.remove();
+    });
     set("stat-items", MENU.reduce((n, c) => n + c.items.length, 0));
   }
 

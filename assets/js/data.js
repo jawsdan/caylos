@@ -1,10 +1,10 @@
 /* =====================================================================
-   CAYLOS' FRIED CHICKEN — SITE CONTENT
+   CAYLÒ'S ORIGINAL FRIED CHICKEN — SITE CONTENT
    ---------------------------------------------------------------------
    This is the ONLY file you need to edit to change:
      • company contact details
      • restaurants
-     • the menu
+     • the menu (and allergens)
      • open jobs
 
    Every text that is shown to visitors has a Norwegian ("no") and an
@@ -13,86 +13,39 @@
 
 /* ---------- Company details (footer, contact page) ---------- */
 const COMPANY = {
-  email: "post@caylos.no",
-  franchiseEmail: "franchise@caylos.no",
-  jobsEmail: "jobb@caylos.no",
-  phone: "+47 22 00 00 00",
-  address: "Storgata 1, 0155 Oslo",
-  orgNumber: "000 000 000",
+  email: "caylos@caylos.no",
+  franchiseEmail: "caylos@caylos.no",
+  jobsEmail: "caylos@caylos.no",
+  phone: "+47 411 96 000",
+  address: "Griffenfeldsgate 3, 3045 Drammen",
+  orgNumber: "", // add the organisation number here to show it in the footer
+  orderUrl: "https://caylosdrammen.agiorder.no/", // "Order now" button on the home page
   socials: {
-    instagram: "https://instagram.com/",
-    facebook: "https://facebook.com/",
-    tiktok: "https://tiktok.com/",
+    instagram: "https://www.instagram.com/caylos.official/",
   },
 };
 
 /* ---------- Restaurants ----------
    Copy one { ... } block to add a new restaurant.
 
+   orderUrl: link to online ordering for that restaurant (optional)
    hours: one line per weekday, Monday first.
           ["11:00", "22:00"] = open 11–22
           null               = closed that day
           close after midnight? write e.g. ["12:00", "02:00"]
+          leave it as [] to hide opening hours and "open now"
    comingSoon: true  → shows "Opening soon" instead of hours
    features: any of "dinein", "takeaway", "delivery", "drivethru"
    ---------------------------------------------------------------- */
 const RESTAURANTS = [
   {
-    name: "Caylò's Grønland",
-    city: "Oslo",
-    address: "Grønlandsleiret 10, 0190 Oslo",
-    phone: "+47 22 00 00 01",
+    name: "Caylò's Drammen",
+    city: "Drammen",
+    address: "Griffenfeldsgate 3, 3045 Drammen",
+    phone: "+47 411 96 000",
+    orderUrl: "https://caylosdrammen.agiorder.no/",
     features: ["dinein", "takeaway", "delivery"],
-    hours: [
-      ["11:00", "23:00"], // Monday
-      ["11:00", "23:00"], // Tuesday
-      ["11:00", "23:00"], // Wednesday
-      ["11:00", "23:00"], // Thursday
-      ["11:00", "02:00"], // Friday
-      ["12:00", "02:00"], // Saturday
-      ["12:00", "22:00"], // Sunday
-    ],
-  },
-  {
-    name: "Caylò's Majorstuen",
-    city: "Oslo",
-    address: "Bogstadveien 50, 0366 Oslo",
-    phone: "+47 22 00 00 02",
-    features: ["dinein", "takeaway"],
-    hours: [
-      ["11:00", "22:00"],
-      ["11:00", "22:00"],
-      ["11:00", "22:00"],
-      ["11:00", "22:00"],
-      ["11:00", "23:00"],
-      ["12:00", "23:00"],
-      null,
-    ],
-  },
-  {
-    name: "Caylò's Bergen Sentrum",
-    city: "Bergen",
-    address: "Torgallmenningen 5, 5014 Bergen",
-    phone: "+47 55 00 00 01",
-    features: ["dinein", "takeaway", "delivery"],
-    hours: [
-      ["11:00", "22:00"],
-      ["11:00", "22:00"],
-      ["11:00", "22:00"],
-      ["11:00", "22:00"],
-      ["11:00", "01:00"],
-      ["12:00", "01:00"],
-      ["13:00", "21:00"],
-    ],
-  },
-  {
-    name: "Caylò's Trondheim",
-    city: "Trondheim",
-    address: "Nordre gate 20, 7011 Trondheim",
-    phone: "",
-    features: ["dinein", "takeaway"],
-    comingSoon: true,
-    hours: [],
+    hours: [], // TODO: add real opening hours
   },
 ];
 
@@ -117,221 +70,275 @@ const ALLERGENS = [
   { id: "molluscs", no: "Bløtdyr", en: "Molluscs" },
 ];
 
+/* ---------- Allergen codes ----------
+   The short codes printed after each dish, like on the old menu:
+   "(H, E, M)". Each code points to one of the allergens above.
+   !! S, SS and I are GUESSES – check them. A code set to null is
+   !! unknown: dishes with it are hidden whenever any allergy is ticked.
+   -------------------------------- */
+const ALLERGEN_CODES = {
+  H: "gluten", // hvete (wheat)
+  E: "egg",
+  M: "milk",
+  SP: "mustard", // sennep
+  N: "nuts",
+  S: "soy", // GUESS – soya or selleri (celery)?
+  SS: "sulphites", // GUESS – svoveldioksid og sulfitter?
+  I: null, // UNKNOWN
+};
+
 /* ---------- Menu ----------
    Each category has a list of items. The sidebar picture is the first
    dish with a photo; add image: "..." to a category to choose another,
    or it falls back to the category icon (emoji).
-   price: number in NOK (kr)
-   tags:  any of "spicy", "new", "veg"
-   allergens: ids from ALLERGENS above, e.g. ["gluten", "milk"]
-              !! The allergens filled in now are EXAMPLES – replace
-              !! them with the real ones before going live.
-   emoji: shown as a picture until you add a real photo
-   image: optional — path to a photo, e.g. "assets/img/burger.jpg"
-   featured: true → also shown on the home page
+
+   price:     number in NOK (kr)   !! prices are PLACEHOLDERS
+   priceFrom: true → shows "fra 69 kr" (for dishes with several sizes)
+   allergens: codes from ALLERGEN_CODES, e.g. ["H", "E", "M"]
+              []      = contains none of the 14 allergens
+              leave it out if unknown → "ask our staff", and the dish is
+              hidden whenever any allergy is ticked
+   tags:      any of "spicy", "new", "veg"
+   image:     photo, e.g. "assets/img/menu/classic-burger.webp"
+   emoji:     stand-in picture until there is a photo
+   featured:  true → also shown on the home page
    -------------------------------- */
 const MENU = [
+  {
+    id: "fried-chicken",
+    icon: "🍗",
+    name: { no: "Fritert kylling", en: "Fried Chicken" },
+    desc: { no: "Sprø, saftig og stekt fersk hver dag.", en: "Crispy, juicy and freshly fried every day." },
+    items: [
+      {
+        name: { no: "Sprø kyllingstrimler", en: "Crispy Tenders" },
+        desc: { no: "Velg 3, 6, 10 eller 15 stk.", en: "Choose 3, 6, 10 or 15 pcs." },
+        price: 69,
+        priceFrom: true,
+        allergens: ["H"],
+        emoji: "🍗",
+      },
+      {
+        name: { no: "Vinger", en: "Wings" },
+        desc: { no: "Velg 6, 10, 15 eller 30 stk.", en: "Choose 6, 10, 15 or 30 pcs." },
+        price: 79,
+        priceFrom: true,
+        allergens: ["H"],
+        emoji: "🍗",
+      },
+      {
+        name: { no: "Overlår", en: "Thighs" },
+        desc: { no: "Velg 2, 3 eller 5 stk.", en: "Choose 2, 3 or 5 pcs." },
+        price: 69,
+        priceFrom: true,
+        allergens: ["H"],
+        emoji: "🍗",
+      },
+      {
+        name: { no: "Klubber", en: "Clubs" },
+        desc: { no: "Velg 2, 3 eller 5 stk.", en: "Choose 2, 3 or 5 pcs." },
+        price: 59,
+        priceFrom: true,
+        allergens: ["H"],
+        emoji: "🍗",
+      },
+    ],
+  },
   {
     id: "burgers",
     icon: "🍔",
     name: { no: "Burgere", en: "Burgers" },
-    desc: { no: "Servert i brioche med sprø kyllingfilet.", en: "Served in brioche with a crispy chicken fillet." },
+    desc: { no: "Burgere og baguetter med sprø kyllingfilet.", en: "Burgers and subs with a crispy chicken fillet." },
     items: [
       {
-        name: { no: "Classic Chicken Burger", en: "Classic Chicken Burger" },
-        allergens: ["gluten", "milk", "egg", "mustard"],
-        desc: { no: "Sprø kyllingfilet, cheddar, salat, tomat og majones.", en: "Crispy chicken fillet, cheddar, lettuce, tomato and mayo." },
-        price: 119,
-        image: "assets/img/menu/classic-burger.webp",
-        featured: true,
-      },
-      {
-        name: { no: "BBQ Onion Ring Burger", en: "BBQ Onion Ring Burger" },
-        allergens: ["gluten", "milk", "egg", "mustard", "celery"],
-        desc: { no: "Sprø filet, cheddar, løkringer, BBQ-saus, pickles og rødløk.", en: "Crispy fillet, cheddar, onion rings, BBQ sauce, pickles and red onion." },
-        price: 139,
-        image: "assets/img/menu/bbq-onion-burger.webp",
-        featured: true,
-      },
-      {
-        name: { no: "Coleslaw Crunch Burger", en: "Coleslaw Crunch Burger" },
-        allergens: ["gluten", "milk", "egg", "mustard"],
-        desc: { no: "Sprø filet, cheddar, coleslaw, rødløk og husets saus.", en: "Crispy fillet, cheddar, coleslaw, red onion and house sauce." },
-        price: 129,
-        image: "assets/img/menu/coleslaw-burger.webp",
-        featured: true,
-      },
-      {
-        name: { no: "Nacho Burger", en: "Nacho Burger" },
-        allergens: ["gluten", "milk", "egg"],
-        desc: { no: "Sprø filet, tortillachips, salsa, tomat, salat og hvitløksdressing.", en: "Crispy fillet, tortilla chips, salsa, tomato, lettuce and garlic dressing." },
-        price: 135,
-        image: "assets/img/menu/nacho-burger.webp",
-        tags: ["new"],
-      },
-      {
-        name: { no: "Jalapeño Burger", en: "Jalapeño Burger" },
-        allergens: ["gluten", "milk", "egg", "mustard"],
-        desc: { no: "Sprø filet, cheddar, jalapeños, rødløk, salat og burgerdressing.", en: "Crispy fillet, cheddar, jalapeños, red onion, lettuce and burger dressing." },
-        price: 135,
+        name: { no: "Spiced Up", en: "Spiced Up" },
+        desc: { no: "Kyllingfilet, salat, rødløk, jalapeños, chilimajones og cheddar.", en: "Chicken fillet, lettuce, red onion, jalapeños, chilli mayo and cheddar." },
+        price: 159,
         image: "assets/img/menu/jalapeno-burger.webp",
         tags: ["spicy"],
         featured: true,
       },
-    ],
-  },
-  {
-    id: "subs",
-    icon: "🥖",
-    name: { no: "Baguetter", en: "Subs" },
-    desc: { no: "Fersk baguette med rikelig fyll.", en: "Fresh baguette with plenty of filling." },
-    items: [
       {
-        name: { no: "Chicken Sub", en: "Chicken Sub" },
-        allergens: ["gluten", "milk", "egg", "mustard"],
-        desc: { no: "Baguette med to sprø kyllingfileter, cheddar, salat, tomat og majones.", en: "Baguette with two crispy chicken fillets, cheddar, lettuce, tomato and mayo." },
-        price: 139,
-        image: "assets/img/menu/chicken-sub.webp",
+        name: { no: "El Dorado", en: "El Dorado" },
+        desc: { no: "Kyllingfilet, coleslaw, rødløk, golden honey og cheddar.", en: "Chicken fillet, coleslaw, red onion, golden honey and cheddar." },
+        price: 159,
+        allergens: ["H", "E", "M", "SP"],
+        image: "assets/img/menu/coleslaw-burger.webp",
+        featured: true,
+      },
+      {
+        name: { no: "Salsa Chick", en: "Salsa Chick" },
+        desc: { no: "Kyllingfilet, salat, tomat, salsa, rømmedressing og nachos.", en: "Chicken fillet, lettuce, tomato, salsa, sour cream dressing and nachos." },
+        price: 159,
+        allergens: ["H", "M"],
+        image: "assets/img/menu/nacho-burger.webp",
+        featured: true,
+      },
+      {
+        name: { no: "Cay's Classic", en: "Cay's Classic" },
+        desc: { no: "Kyllingfilet, salat, tomat, ost og majones.", en: "Chicken fillet, lettuce, tomato, cheese and mayo." },
+        price: 149,
+        allergens: ["H", "E", "M"],
+        image: "assets/img/menu/classic-burger.webp",
         featured: true,
       },
       {
         name: { no: "Halloumi Sub", en: "Halloumi Sub" },
-        allergens: ["gluten", "milk", "egg"],
-        desc: { no: "Baguette med grillet halloumi, syltet rødløk, tomat, salat og dressing.", en: "Baguette with grilled halloumi, pickled red onion, tomato, lettuce and dressing." },
-        price: 135,
+        desc: { no: "Grillet halloumi, salat, tomat, chilimajones og syltet rødløk.", en: "Grilled halloumi, lettuce, tomato, chilli mayo and pickled red onion." },
+        price: 159,
+        allergens: ["H", "M", "E", "SS"],
         image: "assets/img/menu/halloumi-sub.webp",
         tags: ["veg"],
       },
       {
-        name: { no: "Caprese Sub", en: "Caprese Sub" },
-        allergens: ["gluten", "milk", "nuts"],
-        desc: { no: "Baguette med mozzarella, tomat, fersk basilikum og pesto.", en: "Baguette with mozzarella, tomato, fresh basil and pesto." },
-        price: 125,
+        name: { no: "Mozzarella Sub", en: "Mozzarella Sub" },
+        desc: { no: "Mozzarella, pesto, tomat og ruccola.", en: "Mozzarella, pesto, tomato and rocket." },
+        price: 149,
+        allergens: ["H", "E", "N"],
         image: "assets/img/menu/caprese-sub.webp",
         tags: ["veg"],
       },
+      {
+        name: { no: "Cay's Sub", en: "Cay's Sub" },
+        desc: { no: "Kyllingfilet, salat, tomat, majones og cheddar.", en: "Chicken fillet, lettuce, tomato, mayo and cheddar." },
+        price: 159,
+        allergens: ["H", "E", "M"],
+        image: "assets/img/menu/chicken-sub.webp",
+        featured: true,
+      },
+      {
+        name: { no: "Chicken BBQ", en: "Chicken BBQ" },
+        desc: { no: "Kyllingfilet, salat, BBQ-saus, pickles og rødløk.", en: "Chicken fillet, lettuce, BBQ sauce, pickles and red onion." },
+        price: 159,
+        allergens: ["H", "SP", "S", "I", "SS"],
+        image: "assets/img/menu/bbq-onion-burger.webp",
+      },
     ],
   },
   {
-    id: "meals",
+    id: "burger-meals",
     icon: "🍽️",
-    name: { no: "Menyer", en: "Meals" },
+    name: { no: "Burgermenyer", en: "Burger Meals" },
     desc: { no: "Alle menyer kommer med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Every meal comes with fries, a 0.5 l soft drink and 2 chicken pieces." },
     items: [
       {
-        name: { no: "Classic Chicken Burger Meny", en: "Classic Chicken Burger Meal" },
-        allergens: ["gluten", "egg", "milk", "celery", "mustard"],
-        desc: { no: "Classic Chicken Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Classic Chicken Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
-        price: 189,
-        image: "assets/img/menu/classic-burger-meal.webp",
-      },
-      {
-        name: { no: "BBQ Onion Ring Burger Meny", en: "BBQ Onion Ring Burger Meal" },
-        allergens: ["gluten", "egg", "milk", "celery", "mustard"],
-        desc: { no: "BBQ Onion Ring Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "BBQ Onion Ring Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
-        price: 209,
-        image: "assets/img/menu/bbq-onion-burger-meal.webp",
-      },
-      {
-        name: { no: "Coleslaw Crunch Burger Meny", en: "Coleslaw Crunch Burger Meal" },
-        allergens: ["gluten", "egg", "milk", "celery", "mustard"],
-        desc: { no: "Coleslaw Crunch Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Coleslaw Crunch Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
-        price: 199,
-        image: "assets/img/menu/coleslaw-burger-meal.webp",
-      },
-      {
-        name: { no: "Nacho Burger Meny", en: "Nacho Burger Meal" },
-        allergens: ["gluten", "egg", "milk", "celery"],
-        desc: { no: "Nacho Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Nacho Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
-        price: 205,
-        image: "assets/img/menu/nacho-burger-meal.webp",
-      },
-      {
-        name: { no: "Jalapeño Burger Meny", en: "Jalapeño Burger Meal" },
-        allergens: ["gluten", "egg", "milk", "celery", "mustard"],
-        desc: { no: "Jalapeño Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Jalapeño Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
-        price: 205,
+        name: { no: "Spiced Up meny", en: "Spiced Up Meal" },
+        desc: { no: "Spiced Up med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Spiced Up with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 229,
         image: "assets/img/menu/jalapeno-burger-meal.webp",
       },
       {
-        name: { no: "Chicken Sub Meny", en: "Chicken Sub Meal" },
-        allergens: ["gluten", "egg", "milk", "celery", "mustard"],
-        desc: { no: "Chicken Sub med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Chicken Sub with fries, a 0.5 l soft drink and 2 chicken pieces." },
-        price: 209,
-        image: "assets/img/menu/chicken-sub-meal.webp",
+        name: { no: "El Dorado meny", en: "El Dorado Meal" },
+        desc: { no: "El Dorado med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "El Dorado with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 229,
+        allergens: ["H", "E", "M", "SP"],
+        image: "assets/img/menu/coleslaw-burger-meal.webp",
       },
       {
-        name: { no: "Halloumi Sub Meny", en: "Halloumi Sub Meal" },
-        allergens: ["gluten", "egg", "milk", "celery"],
+        name: { no: "Salsa Chick meny", en: "Salsa Chick Meal" },
+        desc: { no: "Salsa Chick med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Salsa Chick with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 229,
+        allergens: ["H", "M"],
+        image: "assets/img/menu/nacho-burger-meal.webp",
+      },
+      {
+        name: { no: "Cay's Classic meny", en: "Cay's Classic Meal" },
+        desc: { no: "Cay's Classic med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Cay's Classic with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 219,
+        allergens: ["H", "E", "M"],
+        image: "assets/img/menu/classic-burger-meal.webp",
+      },
+      {
+        name: { no: "Halloumi Sub meny", en: "Halloumi Sub Meal" },
         desc: { no: "Halloumi Sub med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Halloumi Sub with fries, a 0.5 l soft drink and 2 chicken pieces." },
-        price: 205,
+        price: 229,
+        allergens: ["H", "M", "E", "SS"],
         image: "assets/img/menu/halloumi-sub-meal.webp",
       },
       {
-        name: { no: "Caprese Sub Meny", en: "Caprese Sub Meal" },
-        allergens: ["gluten", "milk", "nuts", "celery"],
-        desc: { no: "Caprese Sub med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Caprese Sub with fries, a 0.5 l soft drink and 2 chicken pieces." },
-        price: 195,
+        name: { no: "Mozzarella Sub meny", en: "Mozzarella Sub Meal" },
+        desc: { no: "Mozzarella Sub med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Mozzarella Sub with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 219,
+        allergens: ["H", "E", "N"],
         image: "assets/img/menu/caprese-sub-meal.webp",
       },
-    ],
-  },
-  {
-    id: "chicken",
-    icon: "🍗",
-    name: { no: "Kylling", en: "Chicken" },
-    desc: { no: "Sprø, saftig og stekt ferdig hver dag.", en: "Crispy, juicy and freshly fried every day." },
-    items: [
       {
-        name: { no: "Originale kyllingbiter", en: "Original Chicken Pieces" },
-        allergens: ["gluten", "celery"],
-        desc: { no: "3 biter kylling med ben i vår hemmelige krydderblanding.", en: "3 bone-in pieces in our secret spice blend." },
-        price: 109,
-        emoji: "🍗",
+        name: { no: "Cay's Sub meny", en: "Cay's Sub Meal" },
+        desc: { no: "Cay's Sub med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Cay's Sub with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 229,
+        allergens: ["H", "E", "M"],
+        image: "assets/img/menu/chicken-sub-meal.webp",
       },
       {
-        name: { no: "Hot Wings (8 stk)", en: "Hot Wings (8 pcs)" },
-        allergens: ["gluten", "celery"],
-        desc: { no: "Sprø vinger dynket i chilisaus.", en: "Crispy wings tossed in chilli sauce." },
-        price: 99,
-        emoji: "🔥",
-        tags: ["spicy"],
-      },
-      {
-        name: { no: "Tenders (5 stk)", en: "Tenders (5 pcs)" },
-        allergens: ["gluten", "egg"],
-        desc: { no: "Benfri kyllingfilet i sprø panering. Velg dipp.", en: "Boneless chicken fillet in a crunchy coating. Choose a dip." },
-        price: 95,
-        emoji: "🍗",
-      },
-      {
-        name: { no: "Popcorn-kylling", en: "Popcorn Chicken" },
-        allergens: ["gluten"],
-        desc: { no: "Små, sprø biter – perfekt å dele.", en: "Bite-sized crispy pieces – perfect for sharing." },
-        price: 69,
-        emoji: "🍿",
+        name: { no: "Chicken BBQ meny", en: "Chicken BBQ Meal" },
+        desc: { no: "Chicken BBQ med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Chicken BBQ with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 229,
+        allergens: ["H", "SP", "S", "I", "SS"],
+        image: "assets/img/menu/bbq-onion-burger-meal.webp",
       },
     ],
   },
   {
-    id: "buckets",
+    id: "chicken-meals",
     icon: "🪣",
-    name: { no: "Bøtter og deling", en: "Buckets & Sharing" },
-    desc: { no: "For gjengen, familien eller en sulten deg.", en: "For the crew, the family, or a very hungry you." },
+    name: { no: "Kyllingmenyer", en: "Chicken Meals" },
+    desc: { no: "Bokser og pakker til én eller hele gjengen.", en: "Boxes and packs for one or the whole crew." },
     items: [
       {
-        name: { no: "Familiebøtte", en: "Family Bucket" },
-        allergens: ["gluten", "celery"],
-        desc: { no: "10 biter kylling, 2 store pommes frites og 2 dipper.", en: "10 chicken pieces, 2 large fries and 2 dips." },
-        price: 349,
+        name: { no: "Small Box", en: "Small Box" },
+        desc: { no: "1 klubbe, 1 overlår, pommes frites og saus.", en: "1 club, 1 thigh, fries and sauce." },
+        price: 129,
+        allergens: ["H"],
+        emoji: "📦",
+      },
+      {
+        name: { no: "Medium Box", en: "Medium Box" },
+        desc: { no: "1 klubbe, 1 overlår, 2 vinger, pommes frites og saus.", en: "1 club, 1 thigh, 2 wings, fries and sauce." },
+        price: 169,
+        allergens: ["H"],
+        emoji: "📦",
+      },
+      {
+        name: { no: "Large Box", en: "Large Box" },
+        desc: { no: "2 klubber, 1 overlår, 3 vinger, 2 kyllingstrimler, pommes frites og saus.", en: "2 clubs, 1 thigh, 3 wings, 2 tenders, fries and sauce." },
+        price: 229,
+        allergens: ["H"],
+        emoji: "📦",
+      },
+      {
+        name: { no: "Duo Pack", en: "Duo Pack" },
+        desc: { no: "4 klubber, 2 overlår, 6 vinger, 4 kyllingstrimler, 2 pommes frites og 2 sauser.", en: "4 clubs, 2 thighs, 6 wings, 4 tenders, 2 fries and 2 sauces." },
+        price: 399,
+        allergens: ["H"],
         emoji: "🪣",
       },
       {
-        name: { no: "Mix-bøtte", en: "Mix Bucket" },
-        allergens: ["gluten", "egg", "celery"],
-        desc: { no: "6 biter, 6 vinger og 6 tenders.", en: "6 pieces, 6 wings and 6 tenders." },
-        price: 399,
+        name: { no: "Family Pack", en: "Family Pack" },
+        desc: { no: "4 klubber, 4 overlår, 10 vinger, 6 kyllingstrimler, 3 pommes frites og 3 sauser.", en: "4 clubs, 4 thighs, 10 wings, 6 tenders, 3 fries and 3 sauces." },
+        price: 549,
+        allergens: ["H"],
         emoji: "🪣",
+      },
+      {
+        name: { no: "Party Pack", en: "Party Pack" },
+        desc: { no: "6 klubber, 6 overlår, 15 vinger, 10 kyllingstrimler, 4 pommes frites og 4 sauser.", en: "6 clubs, 6 thighs, 15 wings, 10 tenders, 4 fries and 4 sauces." },
+        price: 799,
+        allergens: ["H"],
+        emoji: "🪣",
+      },
+    ],
+  },
+  {
+    id: "junior",
+    icon: "🧒",
+    name: { no: "Juniormeny", en: "Junior Menu" },
+    items: [
+      {
+        name: { no: "Juniormeny", en: "Junior Menu" },
+        desc: { no: "2 kyllingstrimler, pommes frites og en juiceboks.", en: "2 tenders, fries and a juice box." },
+        price: 89,
+        allergens: ["H"],
+        emoji: "🧃",
       },
     ],
   },
@@ -340,21 +347,92 @@ const MENU = [
     icon: "🍟",
     name: { no: "Tilbehør", en: "Sides" },
     items: [
-      { name: { no: "Pommes frites", en: "Fries" }, desc: { no: "Sprø og saltet.", en: "Crispy and salted." }, price: 39, emoji: "🍟", tags: ["veg"], allergens: [] },
-      { name: { no: "Coleslaw", en: "Coleslaw" }, desc: { no: "Kremet og frisk.", en: "Creamy and fresh." }, price: 35, emoji: "🥗", tags: ["veg"], allergens: ["egg", "mustard"] },
-      { name: { no: "Mac & cheese", en: "Mac & Cheese" }, desc: { no: "Ostete og deilig.", en: "Cheesy and comforting." }, price: 49, emoji: "🧀", tags: ["veg"], allergens: ["gluten", "milk"] },
-      { name: { no: "Maiskolbe", en: "Corn on the Cob" }, desc: { no: "Med smør.", en: "With butter." }, price: 35, emoji: "🌽", tags: ["veg"], allergens: ["milk"] },
+      {
+        name: { no: "Løkringer", en: "Onion Rings" },
+        desc: { no: "", en: "" },
+        price: 49,
+        emoji: "🧅",
+      },
+      {
+        name: { no: "Coleslaw", en: "Coleslaw" },
+        desc: { no: "", en: "" },
+        price: 39,
+        emoji: "🥗",
+      },
+      {
+        name: { no: "Søtpotetfries", en: "Sweet Potato Fries" },
+        desc: { no: "", en: "" },
+        price: 49,
+        emoji: "🍠",
+      },
+      {
+        name: { no: "Pommes frites", en: "Fries" },
+        desc: { no: "", en: "" },
+        price: 39,
+        emoji: "🍟",
+      },
+      {
+        name: { no: "Dirty Fries", en: "Dirty Fries" },
+        desc: { no: "", en: "" },
+        price: 69,
+        emoji: "🍟",
+      },
+      {
+        name: { no: "Mozzarellasticks", en: "Mozzarella Sticks" },
+        desc: { no: "", en: "" },
+        price: 59,
+        emoji: "🧀",
+      },
     ],
   },
   {
-    id: "dips",
+    id: "sauces",
     icon: "🥣",
-    name: { no: "Dipp og sauser", en: "Dips & Sauces" },
+    name: { no: "Sauser", en: "Sauces" },
     items: [
-      { name: { no: "Husets majones", en: "House Mayo" }, desc: { no: "", en: "" }, price: 15, emoji: "🥣", tags: ["veg"], allergens: ["egg", "mustard"] },
-      { name: { no: "Chilimajones", en: "Chilli Mayo" }, desc: { no: "", en: "" }, price: 15, emoji: "🌶️", tags: ["spicy", "veg"], allergens: ["egg", "mustard"] },
-      { name: { no: "Honning-sennep", en: "Honey Mustard" }, desc: { no: "", en: "" }, price: 15, emoji: "🍯", tags: ["veg"], allergens: ["egg", "mustard"] },
-      { name: { no: "BBQ", en: "BBQ" }, desc: { no: "", en: "" }, price: 15, emoji: "🥫", tags: ["veg"], allergens: ["celery"] },
+      {
+        name: { no: "Chilimajones", en: "Chilli Mayo" },
+        desc: { no: "", en: "" },
+        price: 15,
+        emoji: "🌶️",
+        tags: ["spicy"],
+      },
+      {
+        name: { no: "BBQ", en: "BBQ" },
+        desc: { no: "", en: "" },
+        price: 15,
+        emoji: "🥫",
+      },
+      {
+        name: { no: "Golden Honey Dip", en: "Golden Honey Dip" },
+        desc: { no: "", en: "" },
+        price: 15,
+        emoji: "🍯",
+      },
+      {
+        name: { no: "Majones", en: "Mayo" },
+        desc: { no: "", en: "" },
+        price: 15,
+        emoji: "🥣",
+      },
+      {
+        name: { no: "Sweet Chili Dip", en: "Sweet Chilli Dip" },
+        desc: { no: "", en: "" },
+        price: 15,
+        emoji: "🌶️",
+      },
+      {
+        name: { no: "Hvitløksdipp", en: "Garlic Dip" },
+        desc: { no: "", en: "" },
+        price: 15,
+        emoji: "🧄",
+      },
+      {
+        name: { no: "Cheddarsaus", en: "Cheddar Sauce" },
+        desc: { no: "", en: "" },
+        price: 20,
+        emoji: "🧀",
+      },
     ],
   },
   {
@@ -362,18 +440,98 @@ const MENU = [
     icon: "🥤",
     name: { no: "Drikke", en: "Drinks" },
     items: [
-      { name: { no: "Brus 0,5 l", en: "Soft drink 0.5 l" }, desc: { no: "Spør etter utvalget.", en: "Ask for the selection." }, price: 39, emoji: "🥤", allergens: [] },
-      { name: { no: "Hjemmelaget lemonade", en: "Homemade Lemonade" }, desc: { no: "Frisk og søt.", en: "Fresh and sweet." }, price: 45, emoji: "🍋", allergens: [] },
-      { name: { no: "Vann", en: "Water" }, desc: { no: "", en: "" }, price: 29, emoji: "💧", allergens: [] },
+      {
+        name: { no: "Cola", en: "Cola" },
+        desc: { no: "", en: "" },
+        price: 39,
+        allergens: [],
+        emoji: "🥤",
+      },
+      {
+        name: { no: "Cola Zero", en: "Cola Zero" },
+        desc: { no: "", en: "" },
+        price: 39,
+        allergens: [],
+        emoji: "🥤",
+      },
+      {
+        name: { no: "Fanta", en: "Fanta" },
+        desc: { no: "", en: "" },
+        price: 39,
+        allergens: [],
+        emoji: "🥤",
+      },
+      {
+        name: { no: "Fanta Exotic", en: "Fanta Exotic" },
+        desc: { no: "", en: "" },
+        price: 39,
+        allergens: [],
+        emoji: "🥤",
+      },
+      {
+        name: { no: "Sprite", en: "Sprite" },
+        desc: { no: "", en: "" },
+        price: 39,
+        allergens: [],
+        emoji: "🥤",
+      },
+      {
+        name: { no: "Mountain Dew", en: "Mountain Dew" },
+        desc: { no: "", en: "" },
+        price: 39,
+        allergens: [],
+        emoji: "🥤",
+      },
+      {
+        name: { no: "MER", en: "MER" },
+        desc: { no: "", en: "" },
+        price: 39,
+        allergens: [],
+        emoji: "🥤",
+      },
+      {
+        name: { no: "Bonaqua", en: "Bonaqua" },
+        desc: { no: "", en: "" },
+        price: 35,
+        allergens: [],
+        emoji: "💧",
+      },
     ],
   },
   {
     id: "desserts",
-    icon: "🍦",
-    name: { no: "Dessert", en: "Desserts" },
+    icon: "🍨",
+    name: { no: "Dessert", en: "Dessert" },
+    desc: { no: "Kremete milkshakes.", en: "Creamy milkshakes." },
     items: [
-      { name: { no: "Soft ice", en: "Soft Serve" }, desc: { no: "Med sjokolade- eller karamellsaus.", en: "With chocolate or caramel sauce." }, price: 35, emoji: "🍦", tags: ["veg"], allergens: ["milk"] },
-      { name: { no: "Churros", en: "Churros" }, desc: { no: "Med kanelsukker og sjokoladedipp.", en: "With cinnamon sugar and chocolate dip." }, price: 45, emoji: "🥨", tags: ["veg", "new"], allergens: ["gluten", "milk", "egg", "soy"] },
+      {
+        name: { no: "Vaniljemilkshake", en: "Vanilla Milkshake" },
+        desc: { no: "", en: "" },
+        price: 59,
+        allergens: ["M"],
+        emoji: "🥛",
+      },
+      {
+        name: { no: "Jordbærmilkshake", en: "Strawberry Milkshake" },
+        desc: { no: "", en: "" },
+        price: 59,
+        allergens: ["M"],
+        emoji: "🍓",
+      },
+      {
+        name: { no: "Sjokolademilkshake", en: "Chocolate Milkshake" },
+        desc: { no: "", en: "" },
+        price: 59,
+        allergens: ["M"],
+        emoji: "🍫",
+      },
+      {
+        name: { no: "Karamellmilkshake", en: "Caramel Milkshake" },
+        desc: { no: "", en: "" },
+        price: 59,
+        allergens: ["M"],
+        emoji: "🍮",
+      },
     ],
   },
 ];
@@ -383,17 +541,12 @@ const MENU = [
 const JOBS = [
   {
     title: { no: "Restaurantmedarbeider", en: "Crew Member" },
-    location: { no: "Alle restauranter", en: "All restaurants" },
+    location: { no: "Drammen", en: "Drammen" },
     type: { no: "Deltid / heltid", en: "Part-time / full-time" },
   },
   {
     title: { no: "Skiftleder", en: "Shift Manager" },
-    location: { no: "Oslo", en: "Oslo" },
-    type: { no: "Heltid", en: "Full-time" },
-  },
-  {
-    title: { no: "Restaurantsjef", en: "Restaurant Manager" },
-    location: { no: "Trondheim (ny restaurant)", en: "Trondheim (new restaurant)" },
+    location: { no: "Drammen", en: "Drammen" },
     type: { no: "Heltid", en: "Full-time" },
   },
 ];
