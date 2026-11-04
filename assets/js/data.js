@@ -73,8 +73,8 @@ const ALLERGENS = [
 /* ---------- Allergen codes ----------
    The short codes printed after each dish, like on the old menu:
    "(H, E, M)". Each code points to one of the allergens above.
-   !! S, SS and I are GUESSES – check them. A code set to null is
-   !! unknown: dishes with it are hidden whenever any allergy is ticked.
+   A code set to null is unknown: dishes with it are hidden whenever
+   any allergy is ticked.
    -------------------------------- */
 const ALLERGEN_CODES = {
   H: "gluten", // hvete (wheat)
@@ -82,9 +82,9 @@ const ALLERGEN_CODES = {
   M: "milk",
   SP: "mustard", // sennep
   N: "nuts",
-  S: "soy", // GUESS – soya or selleri (celery)?
-  SS: "sulphites", // GUESS – svoveldioksid og sulfitter?
-  I: null, // UNKNOWN
+  S: "soy",
+  SS: "sulphites", // svoveldioksid og sulfitter
+  I: "celery", // selleri
 };
 
 /* ---------- Menu ----------
