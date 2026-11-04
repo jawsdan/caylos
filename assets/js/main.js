@@ -1,5 +1,5 @@
 /* =====================================================================
-   Caylos' Fried Chicken — site script
+   Caylò's Fried Chicken — site script
    Builds the header and footer, switches language, and renders the
    restaurants, menu and jobs from data.js.
    You normally don't need to edit this file.
@@ -31,15 +31,6 @@
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
   /* ---------- Icons ---------- */
-  const drumstick = (size = 26) => `
-    <svg width="${size}" height="${size}" viewBox="0 0 32 32" aria-hidden="true">
-      <g transform="rotate(-40 16 16)">
-        <ellipse cx="16" cy="10.5" rx="7.5" ry="9" fill="#f4b324"/>
-        <rect x="14.4" y="18" width="3.2" height="8" rx="1" fill="#fff"/>
-        <circle cx="13.7" cy="27" r="2.3" fill="#fff"/>
-        <circle cx="18.3" cy="27" r="2.3" fill="#fff"/>
-      </g>
-    </svg>`;
   const icon = {
     pin: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>',
     phone: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>',
@@ -58,9 +49,8 @@
     el.className = "site-header";
     el.innerHTML = `
       <nav class="container nav" aria-label="Main">
-        <a href="index.html" class="logo" aria-label="Caylos' Fried Chicken">
-          <span class="logo-mark">${drumstick()}</span>
-          <span class="logo-text">Caylos'<small data-i18n="brand.tagline"></small></span>
+        <a href="index.html" class="logo">
+          <img src="assets/img/logo.png" alt="Caylò's Original Fried Chicken" width="757" height="980">
         </a>
         <ul class="nav-links" id="nav-links">
           <li><a href="index.html"${a("home")} data-i18n="nav.home"></a></li>
@@ -130,9 +120,8 @@
       <div class="container">
         <div class="footer-grid">
           <div>
-            <a href="index.html" class="logo">
-              <span class="logo-mark">${drumstick()}</span>
-              <span class="logo-text">Caylos'<small data-i18n="brand.tagline"></small></span>
+            <a href="index.html" class="footer-logo">
+              <img src="assets/img/logo.png" alt="Caylò's Original Fried Chicken" width="757" height="980">
             </a>
             <p data-i18n="footer.about"></p>
             <div class="socials">${socials}</div>
@@ -164,7 +153,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <span>© ${new Date().getFullYear()} Caylos' Fried Chicken. <span data-i18n="footer.rights"></span></span>
+          <span>© ${new Date().getFullYear()} Caylò's Fried Chicken. <span data-i18n="footer.rights"></span></span>
           <span><span data-i18n="contact.org"></span> ${esc(COMPANY.orgNumber)}</span>
         </div>
       </div>`;
@@ -191,7 +180,7 @@
     });
     const titleKey = document.body.dataset.title;
     if (titleKey) {
-      document.title = page === "home" ? t(titleKey) : `${t(titleKey)} | Caylos' Fried Chicken`;
+      document.title = page === "home" ? t(titleKey) : `${t(titleKey)} | Caylò's Fried Chicken`;
     }
   }
 
@@ -217,12 +206,14 @@
       </article>`;
   }
 
+  let menuObserver = null;
   function renderMenu() {
     const nav = document.getElementById("cat-nav");
     const list = document.getElementById("menu-list");
     if (!nav || !list) return;
     nav.innerHTML = MENU.map(
-      (c) => `<a class="chip" href="#${esc(c.id)}" data-cat="${esc(c.id)}">${esc(L(c.name))}</a>`
+      (c) =>
+        `<a class="side-link" href="#${esc(c.id)}" data-cat="${esc(c.id)}"><i aria-hidden="true">${c.icon || "🍗"}</i><span>${esc(L(c.name))}</span></a>`
     ).join("");
     list.innerHTML = MENU.map(
       (c) => `
@@ -235,22 +226,24 @@
       </section>`
     ).join("");
 
-    // Highlight the category chip for the section in view
+    // Highlight the category for the section in view
+    const links = nav.querySelectorAll(".side-link");
+    const highlight = (id) => {
+      links.forEach((c) => c.classList.toggle("active", c.dataset.cat === id));
+      const active = nav.querySelector(".side-link.active");
+      // On phones the categories are a sideways row: keep the active one in view
+      if (active && nav.scrollWidth > nav.clientWidth) {
+        nav.scrollTo({ left: active.offsetLeft - 16, behavior: "smooth" });
+      }
+    };
+    highlight(MENU[0] && MENU[0].id);
+    if (menuObserver) menuObserver.disconnect();
     if ("IntersectionObserver" in window) {
-      const chips = nav.querySelectorAll(".chip");
-      const obs = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((en) => {
-            if (en.isIntersecting) {
-              chips.forEach((c) => c.classList.toggle("active", c.dataset.cat === en.target.id));
-              const active = nav.querySelector(".chip.active");
-              if (active) active.scrollIntoView({ block: "nearest", inline: "nearest" });
-            }
-          });
-        },
-        { rootMargin: "-40% 0px -55% 0px" }
+      menuObserver = new IntersectionObserver(
+        (entries) => entries.forEach((en) => en.isIntersecting && highlight(en.target.id)),
+        { rootMargin: "-30% 0px -65% 0px" }
       );
-      list.querySelectorAll(".menu-cat").forEach((s) => obs.observe(s));
+      list.querySelectorAll(".menu-cat").forEach((s) => menuObserver.observe(s));
     }
   }
 
@@ -462,7 +455,7 @@
           const val = f.tagName === "SELECT" ? f.options[f.selectedIndex]?.text || "" : f.value;
           if (val) lines.push(`${label ? label.textContent : f.name}: ${val}`);
         });
-        const heading = form.closest("section")?.querySelector("h2")?.textContent || "Caylos'";
+        const heading = form.closest("section")?.querySelector("h2")?.textContent || "Caylò's";
         const nameField = form.querySelector('[name="name"]');
         const subject = `${heading}${nameField && nameField.value ? " – " + nameField.value : ""}`;
         window.location.href =

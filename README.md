@@ -1,4 +1,4 @@
-# Caylos' Fried Chicken – website
+# Caylò's Fried Chicken – website
 
 A simple website with no build step. Open `index.html` in a browser, or upload the whole folder to any web host (GitHub Pages, Netlify, one.com, etc.).
 
@@ -16,9 +16,12 @@ Language: the **NO / EN** button in the top bar switches between Norwegian and E
 |---|---|
 | Restaurants, menu, open jobs, email/phone/address | `assets/js/data.js` |
 | All other text (headings, buttons, page text) in Norwegian and English | `assets/js/i18n.js` |
-| Colours and layout | `assets/css/style.css` |
+| Colours and layout | `assets/css/style.css` (colours are at the top) |
+| Logo and favicon | `assets/img/` (`logo.png` is used on the site; `logo-3color.svg/.png` are the 3-colour version from the .ai file) |
 
 **Add a restaurant:** in `data.js`, copy one `{ ... }` block in `RESTAURANTS` and change name, city, address, phone and hours.
+
+**Add a menu category:** copy a whole category block in `MENU`. Its `icon` is the emoji shown in the menu sidebar.
 
 **Add a menu item:** in `data.js`, copy one item in the right `MENU` category. Write `name` and `desc` in both `no` and `en`. Add `featured: true` to also show it on the home page. Add `image: "assets/img/yourphoto.jpg"` to use a photo instead of the emoji.
 

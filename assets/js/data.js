@@ -38,7 +38,7 @@ const COMPANY = {
    ---------------------------------------------------------------- */
 const RESTAURANTS = [
   {
-    name: "Caylos' Grønland",
+    name: "Caylò's Grønland",
     city: "Oslo",
     address: "Grønlandsleiret 10, 0190 Oslo",
     phone: "+47 22 00 00 01",
@@ -54,7 +54,7 @@ const RESTAURANTS = [
     ],
   },
   {
-    name: "Caylos' Majorstuen",
+    name: "Caylò's Majorstuen",
     city: "Oslo",
     address: "Bogstadveien 50, 0366 Oslo",
     phone: "+47 22 00 00 02",
@@ -70,7 +70,7 @@ const RESTAURANTS = [
     ],
   },
   {
-    name: "Caylos' Bergen Sentrum",
+    name: "Caylò's Bergen Sentrum",
     city: "Bergen",
     address: "Torgallmenningen 5, 5014 Bergen",
     phone: "+47 55 00 00 01",
@@ -86,7 +86,7 @@ const RESTAURANTS = [
     ],
   },
   {
-    name: "Caylos' Trondheim",
+    name: "Caylò's Trondheim",
     city: "Trondheim",
     address: "Nordre gate 20, 7011 Trondheim",
     phone: "",
@@ -97,7 +97,7 @@ const RESTAURANTS = [
 ];
 
 /* ---------- Menu ----------
-   Each category has a list of items.
+   Each category has an icon (shown in the sidebar) and a list of items.
    price: number in NOK (kr)
    tags:  any of "spicy", "new", "veg"
    emoji: shown as a picture until you add a real photo
@@ -107,6 +107,7 @@ const RESTAURANTS = [
 const MENU = [
   {
     id: "chicken",
+    icon: "🍗",
     name: { no: "Kylling", en: "Chicken" },
     desc: { no: "Sprø, saftig og stekt ferdig hver dag.", en: "Crispy, juicy and freshly fried every day." },
     items: [
@@ -141,11 +142,12 @@ const MENU = [
   },
   {
     id: "burgers",
+    icon: "🍔",
     name: { no: "Burgere", en: "Burgers" },
     desc: { no: "Servert i brioche med sprø kyllingfilet.", en: "Served in brioche with a crispy chicken fillet." },
     items: [
       {
-        name: { no: "Caylos' Classic", en: "Caylos' Classic" },
+        name: { no: "Caylò's Classic", en: "Caylò's Classic" },
         desc: { no: "Sprø filet, salat, tomat, pickles og husets majones.", en: "Crispy fillet, lettuce, tomato, pickles and house mayo." },
         price: 129,
         emoji: "🍔",
@@ -176,6 +178,7 @@ const MENU = [
   },
   {
     id: "buckets",
+    icon: "🪣",
     name: { no: "Bøtter og deling", en: "Buckets & Sharing" },
     desc: { no: "For gjengen, familien eller en sulten deg.", en: "For the crew, the family, or a very hungry you." },
     items: [
@@ -196,6 +199,7 @@ const MENU = [
   },
   {
     id: "sides",
+    icon: "🍟",
     name: { no: "Tilbehør", en: "Sides" },
     items: [
       { name: { no: "Pommes frites", en: "Fries" }, desc: { no: "Sprø og saltet.", en: "Crispy and salted." }, price: 39, emoji: "🍟", tags: ["veg"] },
@@ -206,6 +210,7 @@ const MENU = [
   },
   {
     id: "dips",
+    icon: "🥣",
     name: { no: "Dipp og sauser", en: "Dips & Sauces" },
     items: [
       { name: { no: "Husets majones", en: "House Mayo" }, desc: { no: "", en: "" }, price: 15, emoji: "🥣", tags: ["veg"] },
@@ -216,6 +221,7 @@ const MENU = [
   },
   {
     id: "drinks",
+    icon: "🥤",
     name: { no: "Drikke", en: "Drinks" },
     items: [
       { name: { no: "Brus 0,5 l", en: "Soft drink 0.5 l" }, desc: { no: "Spør etter utvalget.", en: "Ask for the selection." }, price: 39, emoji: "🥤" },
@@ -225,6 +231,7 @@ const MENU = [
   },
   {
     id: "desserts",
+    icon: "🍦",
     name: { no: "Dessert", en: "Desserts" },
     items: [
       { name: { no: "Soft ice", en: "Soft Serve" }, desc: { no: "Med sjokolade- eller karamellsaus.", en: "With chocolate or caramel sauce." }, price: 35, emoji: "🍦", tags: ["veg"] },
@@ -233,7 +240,7 @@ const MENU = [
   },
 ];
 
-/* ---------- Open jobs (Work at Caylos page) ----------
+/* ---------- Open jobs (Work at Caylò's page) ----------
    Leave the list empty [] if you have no open positions. */
 const JOBS = [
   {
