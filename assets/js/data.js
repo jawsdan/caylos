@@ -106,6 +106,135 @@ const RESTAURANTS = [
    -------------------------------- */
 const MENU = [
   {
+    id: "burgers",
+    icon: "🍔",
+    name: { no: "Burgere", en: "Burgers" },
+    desc: { no: "Servert i brioche med sprø kyllingfilet.", en: "Served in brioche with a crispy chicken fillet." },
+    items: [
+      {
+        name: { no: "Classic Chicken Burger", en: "Classic Chicken Burger" },
+        desc: { no: "Sprø kyllingfilet, cheddar, salat, tomat og majones.", en: "Crispy chicken fillet, cheddar, lettuce, tomato and mayo." },
+        price: 119,
+        image: "assets/img/menu/classic-burger.webp",
+        featured: true,
+      },
+      {
+        name: { no: "BBQ Onion Ring Burger", en: "BBQ Onion Ring Burger" },
+        desc: { no: "Sprø filet, cheddar, løkringer, BBQ-saus, pickles og rødløk.", en: "Crispy fillet, cheddar, onion rings, BBQ sauce, pickles and red onion." },
+        price: 139,
+        image: "assets/img/menu/bbq-onion-burger.webp",
+        featured: true,
+      },
+      {
+        name: { no: "Coleslaw Crunch Burger", en: "Coleslaw Crunch Burger" },
+        desc: { no: "Sprø filet, cheddar, coleslaw, rødløk og husets saus.", en: "Crispy fillet, cheddar, coleslaw, red onion and house sauce." },
+        price: 129,
+        image: "assets/img/menu/coleslaw-burger.webp",
+        featured: true,
+      },
+      {
+        name: { no: "Nacho Burger", en: "Nacho Burger" },
+        desc: { no: "Sprø filet, tortillachips, salsa, tomat, salat og hvitløksdressing.", en: "Crispy fillet, tortilla chips, salsa, tomato, lettuce and garlic dressing." },
+        price: 135,
+        image: "assets/img/menu/nacho-burger.webp",
+        tags: ["new"],
+      },
+      {
+        name: { no: "Jalapeño Burger", en: "Jalapeño Burger" },
+        desc: { no: "Sprø filet, cheddar, jalapeños, rødløk, salat og burgerdressing.", en: "Crispy fillet, cheddar, jalapeños, red onion, lettuce and burger dressing." },
+        price: 135,
+        image: "assets/img/menu/jalapeno-burger.webp",
+        tags: ["spicy"],
+        featured: true,
+      },
+    ],
+  },
+  {
+    id: "subs",
+    icon: "🥖",
+    name: { no: "Baguetter", en: "Subs" },
+    desc: { no: "Fersk baguette med rikelig fyll.", en: "Fresh baguette with plenty of filling." },
+    items: [
+      {
+        name: { no: "Chicken Sub", en: "Chicken Sub" },
+        desc: { no: "Baguette med to sprø kyllingfileter, cheddar, salat, tomat og majones.", en: "Baguette with two crispy chicken fillets, cheddar, lettuce, tomato and mayo." },
+        price: 139,
+        image: "assets/img/menu/chicken-sub.webp",
+        featured: true,
+      },
+      {
+        name: { no: "Halloumi Sub", en: "Halloumi Sub" },
+        desc: { no: "Baguette med grillet halloumi, syltet rødløk, tomat, salat og dressing.", en: "Baguette with grilled halloumi, pickled red onion, tomato, lettuce and dressing." },
+        price: 135,
+        image: "assets/img/menu/halloumi-sub.webp",
+        tags: ["veg"],
+      },
+      {
+        name: { no: "Caprese Sub", en: "Caprese Sub" },
+        desc: { no: "Baguette med mozzarella, tomat, fersk basilikum og pesto.", en: "Baguette with mozzarella, tomato, fresh basil and pesto." },
+        price: 125,
+        image: "assets/img/menu/caprese-sub.webp",
+        tags: ["veg"],
+      },
+    ],
+  },
+  {
+    id: "meals",
+    icon: "🍽️",
+    name: { no: "Menyer", en: "Meals" },
+    desc: { no: "Alle menyer kommer med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Every meal comes with fries, a 0.5 l soft drink and 2 chicken pieces." },
+    items: [
+      {
+        name: { no: "Classic Chicken Burger Meny", en: "Classic Chicken Burger Meal" },
+        desc: { no: "Classic Chicken Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Classic Chicken Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 189,
+        image: "assets/img/menu/classic-burger-meal.webp",
+      },
+      {
+        name: { no: "BBQ Onion Ring Burger Meny", en: "BBQ Onion Ring Burger Meal" },
+        desc: { no: "BBQ Onion Ring Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "BBQ Onion Ring Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 209,
+        image: "assets/img/menu/bbq-onion-burger-meal.webp",
+      },
+      {
+        name: { no: "Coleslaw Crunch Burger Meny", en: "Coleslaw Crunch Burger Meal" },
+        desc: { no: "Coleslaw Crunch Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Coleslaw Crunch Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 199,
+        image: "assets/img/menu/coleslaw-burger-meal.webp",
+      },
+      {
+        name: { no: "Nacho Burger Meny", en: "Nacho Burger Meal" },
+        desc: { no: "Nacho Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Nacho Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 205,
+        image: "assets/img/menu/nacho-burger-meal.webp",
+      },
+      {
+        name: { no: "Jalapeño Burger Meny", en: "Jalapeño Burger Meal" },
+        desc: { no: "Jalapeño Burger med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Jalapeño Burger with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 205,
+        image: "assets/img/menu/jalapeno-burger-meal.webp",
+      },
+      {
+        name: { no: "Chicken Sub Meny", en: "Chicken Sub Meal" },
+        desc: { no: "Chicken Sub med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Chicken Sub with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 209,
+        image: "assets/img/menu/chicken-sub-meal.webp",
+      },
+      {
+        name: { no: "Halloumi Sub Meny", en: "Halloumi Sub Meal" },
+        desc: { no: "Halloumi Sub med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Halloumi Sub with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 205,
+        image: "assets/img/menu/halloumi-sub-meal.webp",
+      },
+      {
+        name: { no: "Caprese Sub Meny", en: "Caprese Sub Meal" },
+        desc: { no: "Caprese Sub med pommes frites, 0,5 l brus og 2 kyllingbiter.", en: "Caprese Sub with fries, a 0.5 l soft drink and 2 chicken pieces." },
+        price: 195,
+        image: "assets/img/menu/caprese-sub-meal.webp",
+      },
+    ],
+  },
+  {
     id: "chicken",
     icon: "🍗",
     name: { no: "Kylling", en: "Chicken" },
@@ -116,7 +245,6 @@ const MENU = [
         desc: { no: "3 biter kylling med ben i vår hemmelige krydderblanding.", en: "3 bone-in pieces in our secret spice blend." },
         price: 109,
         emoji: "🍗",
-        featured: true,
       },
       {
         name: { no: "Hot Wings (8 stk)", en: "Hot Wings (8 pcs)" },
@@ -124,7 +252,6 @@ const MENU = [
         price: 99,
         emoji: "🔥",
         tags: ["spicy"],
-        featured: true,
       },
       {
         name: { no: "Tenders (5 stk)", en: "Tenders (5 pcs)" },
@@ -141,42 +268,6 @@ const MENU = [
     ],
   },
   {
-    id: "burgers",
-    icon: "🍔",
-    name: { no: "Burgere", en: "Burgers" },
-    desc: { no: "Servert i brioche med sprø kyllingfilet.", en: "Served in brioche with a crispy chicken fillet." },
-    items: [
-      {
-        name: { no: "Caylò's Classic", en: "Caylò's Classic" },
-        desc: { no: "Sprø filet, salat, tomat, pickles og husets majones.", en: "Crispy fillet, lettuce, tomato, pickles and house mayo." },
-        price: 129,
-        emoji: "🍔",
-        featured: true,
-      },
-      {
-        name: { no: "Fire Burger", en: "Fire Burger" },
-        desc: { no: "Sterk filet, jalapeños, pepperjack og chilimajones.", en: "Spicy fillet, jalapeños, pepper jack and chilli mayo." },
-        price: 139,
-        emoji: "🌶️",
-        tags: ["spicy", "new"],
-        featured: true,
-      },
-      {
-        name: { no: "Dobbel Crunch", en: "Double Crunch" },
-        desc: { no: "To filéter, dobbel ost, bacon og BBQ-saus.", en: "Two fillets, double cheese, bacon and BBQ sauce." },
-        price: 159,
-        emoji: "🍔",
-      },
-      {
-        name: { no: "Grønn Crunch", en: "Green Crunch" },
-        desc: { no: "Plantebasert filet med salat og urtedressing.", en: "Plant-based fillet with lettuce and herb dressing." },
-        price: 129,
-        emoji: "🥬",
-        tags: ["veg"],
-      },
-    ],
-  },
-  {
     id: "buckets",
     icon: "🪣",
     name: { no: "Bøtter og deling", en: "Buckets & Sharing" },
@@ -187,7 +278,6 @@ const MENU = [
         desc: { no: "10 biter kylling, 2 store pommes frites og 2 dipper.", en: "10 chicken pieces, 2 large fries and 2 dips." },
         price: 349,
         emoji: "🪣",
-        featured: true,
       },
       {
         name: { no: "Mix-bøtte", en: "Mix Bucket" },

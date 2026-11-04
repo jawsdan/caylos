@@ -23,7 +23,7 @@ Language: the **NO / EN** button in the top bar switches between Norwegian and E
 
 **Add a menu category:** copy a whole category block in `MENU`. Its `icon` is the emoji shown in the menu sidebar.
 
-**Add a menu item:** in `data.js`, copy one item in the right `MENU` category. Write `name` and `desc` in both `no` and `en`. Add `featured: true` to also show it on the home page. Add `image: "assets/img/yourphoto.jpg"` to use a photo instead of the emoji.
+**Add a menu item:** in `data.js`, copy one item in the right `MENU` category. Write `name` and `desc` in both `no` and `en`. Add `featured: true` to also show it on the home page. Add `image: "assets/img/menu/yourphoto.webp"` to use a photo instead of the emoji. Menu photos are stored as WebP, 960×600 px (16:10), around 30–50 KB each.
 
 The example restaurants, prices, addresses and contact details are placeholders – replace them with your real ones.
 

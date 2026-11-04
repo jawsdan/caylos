@@ -190,11 +190,11 @@
       .map((tg) => `<span class="tag tag-${tg}">${esc(t("menu.tag." + tg))}</span>`)
       .join("");
     const media = item.image
-      ? `<img src="${esc(item.image)}" alt="${esc(L(item.name))}" loading="lazy">`
+      ? `<img src="${esc(item.image)}" alt="${esc(L(item.name))}" loading="lazy" decoding="async">`
       : `<span aria-hidden="true">${item.emoji || "🍗"}</span>`;
     return `
       <article class="item">
-        <div class="item-img">${media}</div>
+        <div class="item-img${item.image ? " has-photo" : ""}">${media}</div>
         <div class="item-body">
           <h3>${esc(L(item.name))}</h3>
           <p>${esc(L(item.desc))}</p>
