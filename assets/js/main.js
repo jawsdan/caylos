@@ -310,8 +310,11 @@
       if (nav.scrollWidth > nav.clientWidth) {
         nav.scrollTo({ left: active.offsetLeft - 16, behavior: "smooth" });
       }
-      const side = nav.closest(".menu-aside");
-      if (side && side.scrollHeight > side.clientHeight) {
+      // Scroll the sidebar (whichever box scrolls at this screen size) to the active category
+      const side = [nav.closest(".menu-side"), nav.closest(".menu-aside")].find(
+        (el) => el && el.scrollHeight > el.clientHeight + 1
+      );
+      if (side) {
         const top = active.offsetTop - side.clientHeight / 2 + active.offsetHeight / 2;
         side.scrollTo({ top, behavior: "smooth" });
       }

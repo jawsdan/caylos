@@ -473,6 +473,25 @@ p { margin: 0 0 1em; }
 .item-allergens { font-size: 0.8rem !important; color: var(--ink-soft); margin: -4px 0 12px; flex: 0 !important; }
 .item-allergens strong { font-weight: 700; }
 
+/* Wide screens: allergies get their own column, left of the categories */
+@media (min-width: 1200px) {
+  .menu-layout { grid-template-columns: 476px minmax(0, 1fr); gap: 32px; }
+  .menu-aside {
+    display: grid;
+    grid-template-columns: 210px 250px;
+    gap: 16px;
+    align-items: start;
+    max-height: none;
+    overflow: visible;
+  }
+  .menu-aside > * { max-height: calc(100vh - var(--header-h) - 40px); overflow-y: auto; scrollbar-width: thin; }
+  .allergy-box { order: -1; border-radius: var(--radius); }
+  .allergy-box details { padding: 14px 14px 16px; }
+  .allergy-title { font-size: 1.05rem; }
+  .allergy-list { grid-template-columns: 1fr; gap: 5px; }
+  .allergy-chip { padding: 6px 10px; }
+}
+
 .menu-cat { padding-bottom: 44px; scroll-margin-top: calc(var(--header-h) + 20px); }
 .menu-cat-head { margin-bottom: 20px; }
 .menu-cat-head h2 { margin: 0 0 4px; color: var(--red-dark); }
