@@ -48,7 +48,7 @@
     const a = (p) => (p === page ? ' class="active" aria-current="page"' : "");
     el.className = "site-header";
     el.innerHTML = `
-      <nav class="container nav" aria-label="Main">
+      <nav class="container container-full nav" aria-label="Main">
         <a href="index.html" class="logo">
           <img src="assets/img/logo.png" alt="Caylò's Original Fried Chicken">
         </a>

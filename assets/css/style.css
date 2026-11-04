@@ -46,6 +46,8 @@ h3 { font-size: 1.25rem; font-weight: 700; }
 p { margin: 0 0 1em; }
 
 .container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+/* Full screen width (menu page) */
+.container-full { max-width: none; padding: 0 clamp(20px, 2.5vw, 40px); }
 .section { padding: 72px 0; }
 .section-tight { padding: 48px 0; }
 .center { text-align: center; }
